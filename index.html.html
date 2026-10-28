@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>बस ड्राइवर - 90s Bus Driver Radio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Teko:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    body {
+      background-color: #0d0806;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    /* Parallax Night Highway Background */
+    .sky-container {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 50% 30%, #3a1c10 0%, #1f0f08 45%, #0d0604 85%);
+      z-index: 1;
+    }
+
+    .rain-layer {
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(172deg, rgba(255,255,255,0.04) 0, rgba(255,255,255,0.04) 1px, transparent 1px, transparent 14px);
+      animation: rainAnim 0.25s linear infinite;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    @keyframes rainAnim {
+      0% { background-position: 0 0; }
+      100% { background-position: -15px 120px; }
+    }
+
+    .mountains-bg {
+      position: absolute;
+      bottom: 22%;
+      width: 100%;
+      height: 240px;
+      background: 
+        polygon(0% 100%, 12% 50%, 28% 80%, 48% 35%, 68% 70%, 88% 45%, 100% 100%);
+      background-color: #120905;
+      opacity: 0.9;
+    }
+
+    .road-surface {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 24%;
+      background: #080403;
+      border-top: 1px solid #1a0b05;
+      z-index: 2;
+    }
+
+    .road-line {
+      position: absolute;
+      top: 45%;
+      width: 100%;
+      height: 3px;
+      background: repeating-linear-gradient(90deg, #3d1e10 0px, #3d1e10 50px, transparent 50px, transparent 100px);
+      animation: roadMove 0.8s linear infinite;
+    }
+
+    @keyframes roadMove {
+      0% { background-position: 0 0; }
+      100% { background-position: -100px 0; }
+    }
+
+    /* Main Viewport Overlay */
+    .viewport {
+      position: relative;
+      z-index: 10;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 16px 24px;
+    }
+
+    /* Top Navigation Bar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .bus-icon-badge {
+      width: 28px;
+      height: 28px;
+      background: #241108;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      border: 1px solid #422010;
+    }
+
+    .brand-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #eaeaea;
+    }
+
+    .route-sub {
+      font-size: 10px;
+      color: #7d523b;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+    }
+
+    .top-center-banner {
+      background: rgba(18, 9, 5, 0.85);
+      border: 1px solid #3d2012;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      color: #d1a88f;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .top-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .clock-display {
+      font-size: 14px;
+      font-weight: 600;
+      color: #cbb2a1;
+    }
+
+    .whos-driving-btn {
+      background: rgba(26, 13, 7, 0.85);
+      border: 1px solid #422010;
+      padding: 6px 14px;
+      border-radius: 20px;
+      color: #fff;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .whos-driving-btn:hover {
+      background: rgba(50, 25, 13, 0.9);
+      border-color: #f59e0b;
+    }
+
+    /* Main Hero Area */
+    .hero-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-top: -10px;
+    }
+
+    .track-counter {
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: #a3755c;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .hindi-title {
+      font-family: 'Rozha One', serif;
+      font-size: 92px;
+      line-height: 0.95;
+      font-weight: 700;
+      color: #ffffff;
+      text-shadow: 0 10px 35px rgba(0,0,0,0.9);
+      letter-spacing: 1px;
+    }
+
+    .highway-badge {
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: #7d523b;
+      text-transform: uppercase;
+      margin-top: 8px;
+      margin-bottom: 18px;
+    }
+
+    /* Floating Pill Buttons */
+    .pills-group {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .pill-btn {
+      background: rgba(18, 9, 5, 0.9);
+      border: 1px solid #3d2012;
+      padding: 8px 18px;
+      border-radius: 20px;
+      color: #ccc;
+      font-size: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .pill-btn:hover {
+      border-color: #f59e0b;
+      color: #fff;
+    }
+
+    .pill-chai {
+      background: #e67e22;
+      border: none;
+      color: #000;
+      font-weight: 700;
+      box-shadow: 0 0 18px rgba(230, 126, 34, 0.45);
+    }
+
+    .pill-chai:hover {
+      background: #d35400;
+      color: #fff;
+    }
+
+    /* Bus Visual Artwork */
+    .bus-wrapper {
+      position: relative;
+      width: 500px;
+      height: 200px;
+      margin-top: 5px;
+    }
+
+    .bus-body {
+      position: absolute;
+      bottom: 22px;
+      left: 15px;
+      width: 460px;
+      height: 150px;
+      background: linear-gradient(to right, #e67e22 0%, #f1c40f 50%, #e67e22 100%);
+      border-radius: 28px 60px 10px 10px;
+      box-shadow: inset 0 -10px 0 rgba(0,0,0,0.25), 0 15px 30px rgba(0,0,0,0.8);
+      border: 3px solid #140904;
+      overflow: hidden;
+    }
+
+    .bus-stripes {
+      position: absolute;
+      top: 48%;
+      width: 100%;
+      height: 28px;
+      background: repeating-linear-gradient(45deg, #e74c3c, #e74c3c 15px, #2980b9 15px, #2980b9 30px, #2ecc71 30px, #2ecc71 45px);
+      border-top: 2px solid #000;
+      border-bottom: 2px solid #000;
+    }
+
+    .bus-windows {
+      position: absolute;
+      top: 16px;
+      left: 20px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .window-pane {
+      width: 50px;
+      height: 42px;
+      background: #2c3e50;
+      border-radius: 6px 6px 2px 2px;
+      border: 2px solid #000;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .window-pane::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.35) 0%, transparent 60%);
+    }
+
+    .driver-window {
+      width: 70px;
+      border-radius: 6px 24px 2px 2px;
+      background: #1a252f;
+    }
+
+    .luggage-rack {
+      position: absolute;
+      top: -16px;
+      left: 60px;
+      width: 290px;
+      height: 16px;
+      border: 3px solid #222;
+      border-bottom: none;
+      border-radius: 4px 4px 0 0;
+      display: flex;
+      gap: 10px;
+      padding-left: 10px;
+    }
+
+    .luggage-box {
+      width: 48px;
+      height: 14px;
+      background: #7f8c8d;
+      border-radius: 2px;
+      border: 1px solid #111;
+    }
+
+    .wheel {
+      position: absolute;
+      bottom: 5px;
+      width: 54px;
+      height: 54px;
+      background: #000;
+      border-radius: 50%;
+      border: 4px solid #222;
+      box-shadow: 0 0 0 3px #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 5;
+    }
+
+    .wheel-rim {
+      width: 24px;
+      height: 24px;
+      background: #95a5a6;
+      border-radius: 50%;
+      border: 2px solid #fff;
+    }
+
+    .wheel-left { left: 85px; }
+    .wheel-right { right: 85px; }
+
+    .headlight-beam {
+      position: absolute;
+      right: -85px;
+      bottom: 28px;
+      width: 130px;
+      height: 50px;
+      background: linear-gradient(to right, rgba(255,255,210,0.45), transparent);
+      clip-path: polygon(0 30%, 100% 0, 100% 100%, 0 70%);
+      pointer-events: none;
+    }
+
+    /* Spotify Bottom Player Dock */
+    .player-dock-container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .spotify-dock {
+      width: 100%;
+      max-width: 680px;
+      background: rgba(15, 8, 4, 0.94);
+      border: 1px solid #331a0e;
+      border-radius: 35px;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.95);
+    }
+
+    .song-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 220px;
+    }
+
+    .album-art {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: #28140a;
+      border: 2px solid #4a2512;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      animation: spinRecord 12s linear infinite;
+      animation-play-state: paused;
+    }
+
+    .album-art.playing {
+      animation-play-state: running;
+    }
+
+    @keyframes spinRecord {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .title-box {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .song-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .song-artist {
+      font-size: 11px;
+      color: #885c43;
+    }
+
+    .center-controls {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      flex: 1;
+      max-width: 260px;
+    }
+
+    .button-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .ctrl-btn {
+      background: none;
+      border: none;
+      color: #a8795d;
+      cursor: pointer;
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+
+    .ctrl-btn:hover { color: #fff; }
+
+    .play-pause-btn {
+      width: 36px;
+      height: 36px;
+      background: #fff;
+      color: #000;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      cursor: pointer;
+      border: none;
+    }
+
+    .progress-bar-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .time-lbl {
+      font-size: 10px;
+      color: #6b432c;
+      width: 26px;
+    }
+
+    .progress-rail {
+      flex: 1;
+      height: 3px;
+      background: #29140a;
+      border-radius: 2px;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: #e67e22;
+      border-radius: 2px;
+    }
+
+    /* Shortcuts Indicator */
+    .shortcuts-bar {
+      display: flex;
+      gap: 14px;
+      font-size: 10px;
+      color: #593724;
+      letter-spacing: 0.5px;
+    }
+
+    .key-badge {
+      background: #190c06;
+      border: 1px solid #361b0c;
+      padding: 1px 4px;
+      border-radius: 3px;
+      color: #7d523b;
+    }
+
+    /* Modal Backdrop */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.88);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    /* Bus Ticket Modal View */
+    .ticket-card {
+      background: #f4ebd9;
+      color: #1a0e07;
+      width: 100%;
+      max-width: 340px;
+      border-radius: 16px;
+      padding: 24px;
+      position: relative;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.95);
+      font-family: 'Inter', sans-serif;
+    }
+
+    .ticket-card::before, .ticket-card::after {
+      content: '';
+      position: absolute;
+      top: 155px;
+      width: 20px;
+      height: 20px;
+      background: #000;
+      border-radius: 50%;
+    }
+
+    .ticket-card::before { left: -10px; }
+    .ticket-card::after { right: -10px; }
+
+    .ticket-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+
+    .ticket-brand {
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
+
+    .ticket-type {
+      font-size: 9px;
+      letter-spacing: 1.5px;
+      color: #705847;
+      text-transform: uppercase;
+    }
+
+    .ticket-field {
+      margin-bottom: 14px;
+    }
+
+    .ticket-lbl {
+      font-size: 9px;
+      letter-spacing: 1.5px;
+      color: #856a57;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .ticket-val {
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .ticket-divider {
+      border-top: 2px dashed #c9bba7;
+      margin: 20px 0;
+    }
+
+    .ticket-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .barcode {
+      height: 40px;
+      background: repeating-linear-gradient(90deg, #000 0, #000 2px, transparent 2px, transparent 4px, #000 4px, #000 7px, transparent 7px, transparent 9px);
+      margin-bottom: 10px;
+    }
+
+    .ticket-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .ticket-btn-action {
+      width: 100%;
+      padding: 12px;
+      border-radius: 25px;
+      border: none;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .btn-share { background: #fff; color: #000; }
+    .btn-close { background: transparent; color: #fff; border: 1px solid #3d2012; }
+
+    /* Playlist Drawer */
+    .playlist-drawer {
+      background: #140a05;
+      border: 1px solid #331a0e;
+      border-radius: 12px;
+      padding: 12px;
+      width: 100%;
+      max-width: 380px;
+      max-height: 220px;
+      overflow-y: auto;
+      margin-bottom: 10px;
+    }
+
+    .track-row {
+      padding: 8px 10px;
+      font-size: 12px;
+      color: #a8795d;
+      cursor: pointer;
+      border-bottom: 1px solid #241209;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .track-row:hover, .track-row.active {
+      color: #fff;
+      background: #241209;
+    }
+
+    .input-box {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body oncontextmenu="return false;">
+
+  <!-- Parallax Background -->
+  <div class="sky-container">
+    <div class="mountains-bg"></div>
+    <div class="rain-layer"></div>
+    <div class="road-surface">
+      <div class="road-line"></div>
+    </div>
+  </div>
+
+  <!-- Interactive Interface -->
+  <div class="viewport">
+
+    <!-- Top Navigation Bar -->
+    <header class="navbar">
+      <div class="brand-group">
+        <div class="bus-icon-badge">🚌</div>
+        <div>
+          <div class="brand-title">বাস ড্রাইভার</div>
+          <div class="route-sub">NH 48 · DELHI – MUMBAI</div>
+        </div>
+      </div>
+
+      <div class="top-center-banner">
+        <span>গানের অনুরোধ?</span>
+        <button style="background:#e67e22; border:none; color:#000; padding:2px 8px; border-radius:10px; font-weight:700; cursor:pointer;" onclick="openRequestModal()">হ্যাঁ</button>
+      </div>
+
+      <div class="top-right">
+        <div class="clock-display" id="clock">19:28</div>
+        <button class="whos-driving-btn" onclick="openSocials()">
+          <span>🐱</span> Who's driving?
+        </button>
+      </div>
+    </header>
+
+    <!-- Center Section -->
+    <main class="hero-center">
+      <div class="track-counter">225 TRACKS · NON-STOP</div>
+      <h1 class="hindi-title">बस ड्राइवर</h1>
+      <div class="highway-badge">ALL NIGHT ON NH 48</div>
+
+      <!-- Action Pills -->
+      <div class="pills-group">
+        <button class="pill-btn" onclick="playHorn()">
+          📢 हॉर्न ओके प्लीज् / HORN OK PLEASEEE
+        </button>
+        <button class="pill-btn pill-chai" onclick="openChaiModal()">
+          ☕ Chai for the driver
+        </button>
+      </div>
+
+      <!-- Bus Graphic -->
+      <div class="bus-wrapper">
+        <div class="luggage-rack">
+          <div class="luggage-box"></div>
+          <div class="luggage-box" style="width:60px; background:#3f2011;"></div>
+        </div>
+        <div class="bus-body">
+          <div class="bus-windows">
+            <div class="window-pane"></div>
+            <div class="window-pane"></div>
+            <div class="window-pane"></div>
+            <div class="window-pane driver-window"></div>
+          </div>
+          <div class="bus-stripes"></div>
+        </div>
+        <div class="wheel wheel-left"><div class="wheel-rim"></div></div>
+        <div class="wheel wheel-right"><div class="wheel-rim"></div></div>
+        <div class="headlight-beam"></div>
+      </div>
+    </main>
+
+    <!-- Spotify Dock Footer -->
+    <footer class="player-dock-container">
+      
+      <!-- Drawer Menu -->
+      <div class="playlist-drawer" id="playlistDrawer" style="display:none;">
+        <div class="track-row" onclick="loadCategory('bengali')"><span>🇧🇩 Bengali 90s Bus Route</span> <span>15 Tracks</span></div>
+        <div class="track-row" onclick="loadCategory('hindi')"><span>🇮🇳 Hindi Jhankar Beats</span> <span>85 Tracks</span></div>
+        <div class="track-row" onclick="loadCategory('bhojpuri')"><span>🪘 Bhojpuri Dholak Express</span> <span>40 Tracks</span></div>
+        <div class="track-row" onclick="loadCategory('punjabi')"><span>🚜 Punjabi Highway Hits</span> <span>50 Tracks</span></div>
+        <div class="track-row" onclick="openLikedPlaylist()"><span>❤️ My Liked Playlist</span> <span id="likedCount">0</span></div>
+      </div>
+
+      <div class="spotify-dock">
+        <!-- Song Info -->
+        <div class="song-meta">
+          <div class="album-art" id="albumArt">📻</div>
+          <div class="title-box">
+            <div class="song-title" id="songTitle">Aapke Pyaar Mein Hum</div>
+            <div class="song-artist" id="songArtist">Purple Melodies</div>
+          </div>
+        </div>
+
+        <!-- Player Controls -->
+        <div class="center-controls">
+          <div class="button-row">
+            <button class="ctrl-btn" onclick="togglePlaylistDrawer()">☰</button>
+            <button class="ctrl-btn" onclick="prevTrack()">⏮</button>
+            <button class="play-pause-btn" id="playBtn" onclick="togglePlay()">▶</button>
+            <button class="ctrl-btn" onclick="nextTrack()">⏭</button>
+            <button class="ctrl-btn" id="likeBtn" onclick="toggleLikeCurrentSong()">❤️</button>
+          </div>
+
+          <div class="progress-bar-wrap">
+            <span class="time-lbl" id="currTime">0:00</span>
+            <div class="progress-rail" onclick="seekAudio(event)">
+              <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <span class="time-lbl" id="durTime">5:30</span>
+          </div>
+        </div>
+
+        <!-- Ticket Button -->
+        <div>
+          <button class="ctrl-btn" style="font-size:18px;" onclick="openTicketModal()" title="View Ticket">🎟️</button>
+        </div>
+      </div>
+
+      <!-- Shortcuts Footer -->
+      <div class="shortcuts-bar">
+        <span><span class="key-badge">Space</span> PLAY / PAUSE</span>
+        <span><span class="key-badge">T</span> TICKET</span>
+        <span><span class="key-badge">H</span> HORN</span>
+        <span><span class="key-badge">R</span> REQUEST</span>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Audio Source -->
+  <audio id="mainAudio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+
+  <!-- Ticket View Modal -->
+  <div class="modal-backdrop" id="ticketModal">
+    <div style="display:flex; flex-direction:column; align-items:center; gap:12px;">
+      <div class="ticket-card">
+        <div class="ticket-header">
+          <div>
+            <div class="ticket-brand">BUS DRIVER</div>
+            <div style="font-size:10px; color:#856a57;">बस ड्राइवर</div>
+          </div>
+          <div class="ticket-type">NIGHT SERVICE</div>
+        </div>
+
+        <div class="ticket-field">
+          <div class="ticket-lbl">ROUTE</div>
+          <div class="ticket-val">NH 48 · Delhi – Mumbai</div>
+        </div>
+
+        <div class="ticket-field">
+          <div class="ticket-lbl">BOARDING</div>
+          <div class="ticket-val" style="font-size:15px;">90s Bus Driver Playlist</div>
+        </div>
+
+        <div class="ticket-divider"></div>
+
+        <div class="ticket-field">
+          <div class="ticket-lbl">NOW PLAYING</div>
+          <div class="ticket-val" id="ticketTrackName" style="font-size:20px; color:#b03a2e;">Aapke Pyaar Mein Hum</div>
+          <div style="font-size:12px; color:#705847;" id="ticketArtistName">Purple Melodies</div>
+        </div>
+
+        <div class="ticket-grid">
+          <div>
+            <div class="ticket-lbl">SEAT</div>
+            <div class="ticket-val">2A</div>
+          </div>
+          <div>
+            <div class="ticket-lbl">SIDE</div>
+            <div class="ticket-val">Window</div>
+          </div>
+          <div>
+            <div class="ticket-lbl">DEPARTS</div>
+            <div class="ticket-val" id="ticketTime">21:50</div>
+          </div>
+        </div>
+
+        <div class="barcode"></div>
+
+        <div class="ticket-footer">
+          <span>busdriver.wtf</span>
+          <span style="color:#856a57;">PASSENGER COPY</span>
+        </div>
+      </div>
+
+      <button class="ticket-btn-action btn-share" onclick="alert('Ticket shared!')">Share your ticket</button>
+      <button class="ticket-btn-action btn-close" onclick="closeTicketModal()">Not now</button>
+    </div>
+  </div>
+
+  <!-- Chai Modal (With Added UPI QR) -->
+  <div class="modal-backdrop" id="chaiModal">
+    <div class="ticket-card" style="text-align:center;">
+      <h3 style="color:#e67e22; margin-bottom:8px;">☕ Chai for the Driver</h3>
+      <p style="font-size:12px; color:#666; margin-bottom:12px;">Support the radio driver with a voluntary coffee/chai contribution!</p>
+      
+      <!-- Generated Dynamic UPI QR Code for 9734424605@mbk -->
+      <div style="background:#fff; padding:10px; border-radius:10px; display:inline-block; margin-bottom:10px;">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=upi://pay?pa=9734424605@mbk%26pn=BusDriverRadio%26cu=INR" alt="UPI QR Scanner">
+      </div>
+      <p style="font-size:11px; color:#705847; margin-bottom:12px;">UPI ID: <b>9734424605@mbk</b></p>
+
+      <button class="ticket-btn-action btn-share" style="background:#e67e22; color:#fff;" onclick="closeChaiModal()">Close</button>
+    </div>
+  </div>
+
+  <!-- Socials Modal (Who's Driving?) -->
+  <div class="modal-backdrop" id="socialModal">
+    <div class="ticket-card" style="text-align:center;">
+      <h3 style="margin-bottom:8px;">🐱 Who's Driving?</h3>
+      <p style="font-size:12px; color:#666; margin-bottom:15px;">Follow the driver on social media!</p>
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <button class="ticket-btn-action btn-share" onclick="window.open('https://www.instagram.com/crazy_sakil__605?vrfl=ZnAza3o1b3pqeGcw','_blank')">📷 Follow on Instagram</button>
+        <button class="ticket-btn-action btn-share" onclick="window.open('https://www.facebook.com/share/19yhSkd4j4/','_blank')">📘 Follow on Facebook</button>
+        <button class="ticket-btn-action btn-close" onclick="closeSocials()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Request Modal -->
+  <div class="modal-backdrop" id="requestModal">
+    <div class="ticket-card">
+      <h3 style="margin-bottom:10px; text-align:center;">🎵 Request A Song</h3>
+      <input type="text" id="reqSong" class="input-box" placeholder="Song Name">
+      <input type="text" id="reqLang" class="input-box" placeholder="Language (Bengali/Hindi)">
+      <button class="ticket-btn-action btn-share" style="background:#e67e22; color:#fff;" onclick="submitSongReq()">Send Request</button>
+      <button class="ticket-btn-action btn-close" onclick="closeRequestModal()">Cancel</button>
+    </div>
+  </div>
+
+  <script>
+    // Live Clock
+    function updateClock() {
+      const now = new Date();
+      const hrs = String(now.getHours()).padStart(2, '0');
+      const mins = String(now.getMinutes()).padStart(2, '0');
+      document.getElementById('clock').innerText = `${hrs}:${mins}`;
+      document.getElementById('ticketTime').innerText = `${hrs}:${mins}`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Songs Library
+    const musicLibrary = {
+      bengali: [
+        { title: "Bengali 90s Bus Route Mix", artist: "Kishore & Kumar", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" }
+      ],
+      hindi: [
+        { title: "Aapke Pyaar Mein Hum", artist: "Purple Melodies", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" },
+        { title: "Tu Shayar Hai Main Teri Shayari", artist: "Alka Yagnik", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" }
+      ],
+      bhojpuri: [
+        { title: "Bhojpuri Dholak Bus Classic", artist: "Desi Highway", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3" }
+      ],
+      punjabi: [
+        { title: "Punjabi Retro Highway Beats", artist: "Bhangra Bus", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3" }
+      ]
+    };
+
+    let currentCat = 'hindi';
+    let currentIdx = 0;
+
+    const audio = document.getElementById('mainAudio');
+    const playBtn = document.getElementById('playBtn');
+    const albumArt = document.getElementById('albumArt');
+    const progressFill = document.getElementById('progressFill');
+
+    function togglePlay() {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerText = '⏸';
+        albumArt.classList.add('playing');
+      } else {
+        audio.pause();
+        playBtn.innerText = '▶';
+        albumArt.classList.remove('playing');
+      }
+    }
+
+    function loadTrack(cat, idx) {
+      currentCat = cat;
+      currentIdx = idx;
+      const track = musicLibrary[cat][idx];
+      document.getElementById('songTitle').innerText = track.title;
+      document.getElementById('songArtist').innerText = track.artist;
+      document.getElementById('ticketTrackName').innerText = track.title;
+      document.getElementById('ticketArtistName').innerText = track.artist;
+      audio.src = track.url;
+      audio.load();
+      togglePlay();
+    }
+
+    function loadCategory(cat) {
+      loadTrack(cat, 0);
+      togglePlaylistDrawer();
+    }
+
+    function nextTrack() {
+      const catTracks = musicLibrary[currentCat];
+      currentIdx = (currentIdx + 1) % catTracks.length;
+      loadTrack(currentCat, currentIdx);
+    }
+
+    function prevTrack() {
+      const catTracks = musicLibrary[currentCat];
+      currentIdx = (currentIdx - 1 + catTracks.length) % catTracks.length;
+      loadTrack(currentCat, currentIdx);
+    }
+
+    audio.ontimeupdate = () => {
+      if (audio.duration) {
+        const pct = (audio.currentTime / audio.duration) * 100;
+        progressFill.style.width = pct + '%';
+        document.getElementById('currTime').innerText = formatTime(audio.currentTime);
+        document.getElementById('durTime').innerText = formatTime(audio.duration);
+      }
+    };
+
+    function formatTime(sec) {
+      const m = Math.floor(sec / 60);
+      const s = Math.floor(sec % 60);
+      return `${m}:${s < 10 ? '0' : ''}${s}`;
+    }
+
+    function seekAudio(e) {
+      const rail = e.currentTarget;
+      const pct = e.offsetX / rail.clientWidth;
+      audio.currentTime = pct * audio.duration;
+    }
+
+    // Bus Horn Sound Synthesizer
+    function playHorn() {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc1 = ctx.createOscillator();
+      const osc2 = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      osc1.type = 'sawtooth';
+      osc2.type = 'sawtooth';
+      osc1.frequency.setValueAtTime(150, ctx.currentTime);
+      osc2.frequency.setValueAtTime(220, ctx.currentTime);
+
+      gain.gain.setValueAtTime(0.3, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.8);
+
+      osc1.connect(gain);
+      osc2.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc1.start();
+      osc2.start();
+      osc1.stop(ctx.currentTime + 0.8);
+      osc2.stop(ctx.currentTime + 0.8);
+    }
+
+    // Liked Songs Feature
+    function getLikedSongs() {
+      let l = localStorage.getItem('liked_songs');
+      return l ? JSON.parse(l) : [];
+    }
+
+    function toggleLikeCurrentSong() {
+      let liked = getLikedSongs();
+      const track = musicLibrary[currentCat][currentIdx];
+      const idx = liked.findIndex(s => s.title === track.title);
+
+      if (idx > -1) liked.splice(idx, 1);
+      else liked.push(track);
+
+      localStorage.setItem('liked_songs', JSON.stringify(liked));
+      document.getElementById('likedCount').innerText = liked.length;
+    }
+
+    // Modals & Drawer Handlers
+    function openTicketModal() { document.getElementById('ticketModal').style.display = 'flex'; }
+    function closeTicketModal() { document.getElementById('ticketModal').style.display = 'none'; }
+    function openChaiModal() { document.getElementById('chaiModal').style.display = 'flex'; }
+    function closeChaiModal() { document.getElementById('chaiModal').style.display = 'none'; }
+    function openSocials() { document.getElementById('socialModal').style.display = 'flex'; }
+    function closeSocials() { document.getElementById('socialModal').style.display = 'none'; }
+    function openRequestModal() { document.getElementById('requestModal').style.display = 'flex'; }
+    function closeRequestModal() { document.getElementById('requestModal').style.display = 'none'; }
+
+    function togglePlaylistDrawer() {
+      const d = document.getElementById('playlistDrawer');
+      d.style.display = d.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function submitSongReq() {
+      const song = document.getElementById('reqSong').value;
+      const lang = document.getElementById('reqLang').value;
+      if (!song) return;
+      alert('Thank you! Your song request has been registered.');
+      closeRequestModal();
+    }
+
+    // Keyboard Shortcuts
+    document.addEventListener('keydown', (e) => {
+      if (e.code === 'Space') { e.preventDefault(); togglePlay(); }
+      if (e.key === 't' || e.key === 'T') openTicketModal();
+      if (e.key === 'h' || e.key === 'H') playHorn();
+      if (e.key === 'r' || e.key === 'R') openRequestModal();
+    });
+  </script>
+</body>
+</html>
